@@ -1,0 +1,695 @@
+/* ======== PENGATURAN GLOBAL & FONT ======== */
+:root {
+    /* Anda bisa ganti warna ini sesuai selera */
+    /* Saya ambil inspirasi hijau dari keramik dapur Anda */
+    --primary-color: #0d4a3a;
+    --secondary-color: #f3f4f6;
+    --text-dark: #333;
+    --text-light: #fff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    /* Efek scroll halus saat klik menu */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Font profesional */
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+h1,
+h2 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* ======== HEADER & NAVIGASI (SUDAH DIPERBAIKI) ======== */
+#header {
+    position: fixed;
+    width: 100%;
+    /* PERBAIKAN: Saya kembalikan ke 'top: 0;' ya. 
+      Jika 'top: -100px;', header-nya akan hilang di atas layar.
+    */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+#header.scrolled {
+    background-color: var(--text-light);
+    box-shadow: var(--shadow);
+}
+
+.navbar {
+    padding: 1rem 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* PERBAIKAN 1: Mengatur ukuran logo SVG Anda
+  Rule CSS .logo lama (yang ada font-size) bisa dihapus.
+*/
+/* PERBAIKAN 1: Mengatur ukuran logo SVG Anda */
+.logo img {
+    height: 150px; /* <-- UKURAN ASLI (saat transparan) */
+    vertical-align: middle;
+    transition: all 0.3s ease;
+}
+
+/* TAMBAHAN: Saat di-scroll, logo mengecil */
+#header.scrolled .logo img {
+    height: 100px; /* <-- UKURAN KECIL (setelah di-scroll) */
+}
+
+/* PERBAIKAN 2: Membuat logo jadi PUTIH saat header transparan
+  Ini adalah "trik" filter CSS untuk mengubah warna gambar.
+*/
+#header:not(.scrolled) .logo img {
+    filter: brightness(0) invert(1);
+}
+
+/* PERBAIKAN 3: Efek hover (sesuai permintaan Anda)
+*/
+
+/* Saat header transparan (logo putih), di-hover tetap putih + sedikit pudar */
+#header:not(.scrolled) .logo:hover img {
+    filter: brightness(0) invert(1) opacity(0.8);
+}
+
+/* Saat header di-scroll (logo hitam), di-hover jadi sedikit pudar */
+#header.scrolled .logo:hover img {
+    opacity: 0.8;
+}
+
+
+/* --- Bagian Menu Teks (Sudah Benar) --- */
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu li {
+    margin-left: 20px;
+}
+
+.nav-menu a {
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Warna link saat header di-scroll (background putih) */
+#header.scrolled .nav-menu a {
+    color: var(--primary-color);
+}
+
+#header.scrolled .nav-menu a:hover {
+    color: #000;
+}
+
+/* Ini 'pemaksa' agar teks tombol tetap putih pas di-hover */
+#header.scrolled .nav-menu a.btn-primary:hover {
+    color: var(--text-light); /* <-- Paksa jadi PUTIH */
+}
+
+/* Warna link saat header transparan (di atas gambar hero) */
+#header:not(.scrolled) .nav-menu a {
+    color: var(--text-light);
+    /* Putih */
+}
+
+#header:not(.scrolled) .nav-menu a:hover {
+    color: var(--secondary-color);
+    /* Putih pudar */
+}
+
+/* ======== TOMBOL (CTA) ======== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* * [BARU] Style DEFAULT (Saat header di-scroll / background putih)
+ * Sesuai request: Transparan, Teks Hijau
+*/
+.btn-primary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+/* * [BARU] Style HOVER (Saat header di-scroll / background putih)
+ * Sesuai request: Background Hijau, Teks Putih
+*/
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border-color: var(--primary-color);
+}
+
+/* * [BARU] Style DEFAULT (Saat header TRANSparan / di atas)
+ * Sesuai request: Transparan, Teks Putih ("Biasa")
+*/
+#header:not(.scrolled) .btn-primary {
+    background-color: transparent;
+    color: var(--text-light);
+    border-color: var(--text-light);
+}
+
+/* * [BARU] Style HOVER (Saat header TRANSparan / di atas)
+ * Sesuai request: Background Hijau ("Primary"), Teks Off-white ("Secondary")
+*/
+#header:not(.scrolled) .btn-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color); /* Ini 'secondary' (putih pudar) yg kamu minta */
+    border-color: var(--primary-color);
+}
+
+
+.btn-secondary {
+    background: var(--text-light);
+    color: var(--primary-color);
+    border: 2px solid var(--text-light);
+}
+
+.btn-secondary:hover {
+    background: transparent;
+    color: var(--text-light);
+}
+
+/* ======== HERO SECTION ======== */
+#hero {
+    position: relative;
+    height: 100vh;
+    /* Tinggi 100% dari layar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* GANTI 'tampakLuar.jpg' dengan foto terbaik Anda! */
+    background: url('tampakLuar.jpg') no-repeat center center/cover;
+    z-index: -2;
+}
+
+/* Efek overlay gelap agar tulisan terbaca */
+.hero-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+/* ======== SECTION LAINNYA & FOOTER ======== */
+.section-padding {
+    padding: 60px 0;
+}
+
+.bg-light {
+    background-color: var(--secondary-color);
+}
+
+.footer {
+    background-color: var(--text-dark);
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* ======== RESPONSIVE (Untuk HP) ======== */
+@media (max-width: 768px) {
+    .nav-menu {
+        /* Nanti kita bisa buat menu hamburger di sini */
+        /* Untuk sekarang, kita sembunyikan dulu beberapa item */
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* ======== KARTU FASILITAS & GALERI ======== */
+
+/* Penanda untuk subtitle (teks di bawah <h2>) */
+.section-subtitle {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mengatur <h2> agar center */
+#fasilitas h2,
+#galeri h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Ini adalah Container Grid */
+.grid-layout {
+    display: grid;
+    /* Ini adalah "magic" CSS Grid:
+      - Buat kolom sebanyak mungkin (auto-fit)
+      - Ukuran minimum kolom 300px
+      - Ukuran maksimum 1fr (membagi sisa ruang)
+      - Ini membuatnya otomatis responsive!
+    */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    /* Jarak antar kartu */
+}
+
+/* Styling Kartu Individual */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    /* Bikin sudut melengkung */
+    box-shadow: var(--shadow);
+    /* Pakai shadow dari variabel root kita */
+    overflow: hidden;
+    /* Penting agar gambar tidak keluar dari border-radius */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek INTERAKTIF saat di-hover */
+.card:hover {
+    transform: translateY(-5px);
+    /* Kartu sedikit terangkat */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    /* Bayangan lebih jelas */
+}
+
+/* Styling Gambar di dalam Kartu */
+.card-img {
+    width: 100%;
+    height: 200px;
+    /* Tinggi gambar tetap */
+    object-fit: cover;
+    /* Mencegah gambar gepeng/stretch */
+}
+
+/* Styling Gambar di dalam Kartu (VERSI BARU "ZRETTT") */
+
+/* 1. Ini adalah wrapper/container-nya */
+.card-img-wrapper {
+    max-height: 200px;
+    /* <-- Tentukan tinggi krop awal di sini */
+    overflow: hidden;
+    /* Sembunyikan sisa gambar */
+
+    /* Ini adalah "ZRETTT"-nya! Transisi animasi untuk max-height */
+    transition: max-height 0.4s ease-out;
+}
+
+/* 2. Ini adalah gambar di dalamnya */
+.card-img-wrapper img {
+    width: 100%;
+    /* Gambar akan 100% lebar */
+    height: auto;
+    /* Biarkan tinggi gambar proporsional (tidak dipaksa) */
+    display: block;
+}
+
+/* 3. Saat KARTU di-hover... */
+.card:hover .card-img-wrapper {
+    /* ...animasikan max-height ke angka yang SANGAT BESAR */
+    /* Dia akan berhenti di tinggi asli gambar secara otomatis */
+    max-height: 1000px;
+
+    /* 'ease-in' di sini membuat efek 'zrettt'-nya lebih terasa */
+    transition: max-height 0.5s ease-in;
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    /* Samakan dengan warna tema */
+    margin-bottom: 8px;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* ======== SECTION KONTAK & PETA LOKASI ======== */
+#kontak h2,
+#kontak .section-subtitle {
+    text-align: center;
+}
+
+/* Ini adalah container Grid untuk 2-kolom */
+.kontak-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Bagi 2 kolom sama rata */
+    gap: 40px;
+    /* Jarak antar kolom */
+    align-items: start;
+    /* Konten di atas */
+    margin-top: 40px;
+}
+
+.kontak-info h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* Memberi jarak antar sub-judul */
+.kontak-subjudul {
+    margin-top: 30px;
+}
+
+.kontak-info p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Styling Tombol WhatsApp */
+.btn-kontak-wa {
+    /* Kita pakai ulang style .btn tapi dimodifikasi */
+    display: inline-flex;
+    /* Agar icon & teks sejajar */
+    align-items: center;
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    background-color: #25D366;
+    /* Warna hijau WA */
+    color: #fff;
+    border: 2px solid #25D366;
+    border-radius: 50px;
+    /* Bikin jadi 'pil' */
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+/* Icon SVG di dalam tombol */
+.btn-kontak-wa svg {
+    margin-right: 10px;
+}
+
+.btn-kontak-wa:hover {
+    background-color: #fff;
+    color: #25D366;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+/* Styling iFrame Peta */
+.kontak-peta iframe {
+    width: 100%;
+    /* Otomatis responsif */
+    height: 100%;
+    /* Penuhi tinggi kolom (minimal 450px) */
+    min-height: 450px;
+    border-radius: 8px;
+    /* Sudut melengkung */
+    box-shadow: var(--shadow);
+}
+
+
+/* ======== RESPONSIVE (Untuk HP) ======== */
+@media (max-width: 768px) {
+
+    /* Ubah 2-kolom jadi 1-kolom */
+    .kontak-layout {
+        grid-template-columns: 1fr;
+        /* Tumpuk ke bawah */
+        gap: 20px;
+    }
+
+    /* Balik urutan di HP: Peta dulu, baru info */
+    .kontak-info {
+        order: 2;
+        /* Info jadi urutan ke-2 */
+    }
+
+    .kontak-peta {
+        order: 1;
+        /* Peta jadi urutan ke-1 */
+    }
+}
+
+/* ======== CSS UNTUK MENU HAMBURGER ======== */
+
+.hamburger-menu {
+    display: none;
+    /* Sembunyi di desktop */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+    /* Pastikan di atas elemen lain */
+}
+
+.hamburger-menu span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    /* Warna garis (saat di-scroll) */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Ganti warna garis jadi PUTIH saat header transparan */
+#header:not(.scrolled) .hamburger-menu span {
+    background-color: var(--text-light);
+}
+
+/* Animasi tombol hamburger jadi 'X' saat aktif */
+.hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+
+
+/* ======== STYLING FOOTER BARU ======== */
+.footer {
+    background-color: var(--text-dark);
+    color: #ccc;
+    padding: 60px 0 0 0;
+}
+
+.footer-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Kolom 1 lebih besar */
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col {
+    font-size: 0.9rem;
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.footer-col p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.footer-col .logo-footer img {
+    height: 80px; /* Samakan dgn logo di header */
+    filter: brightness(0) invert(1) opacity(0.8); /* Bikin jadi putih */
+    margin-bottom: 15px;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a, .footer-wa {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover, .footer-wa:hover {
+    color: var(--text-light);
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Responsif untuk footer */
+@media (max-width: 768px) {
+    .footer-layout {
+        grid-template-columns: 1fr; /* Tumpuk ke bawah */
+        gap: 30px;
+    }
+}
+
+
+
+
+
+/* Media Query untuk layar HP (768px ke bawah) */
+@media (max-width: 768px) {
+
+    /* Tampilkan tombol hamburger */
+    .hamburger-menu {
+        display: flex;
+    }
+
+    /* Sembunyikan menu versi desktop */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        /* Sembunyi di luar layar */
+        width: 80%;
+        /* Lebar menu 80% layar */
+        height: 100vh;
+        /* Tinggi penuh layar */
+        background-color: var(--text-light);
+        /* Background putih */
+        flex-direction: column;
+        /* Tumpuk link ke bawah */
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        transition: right 0.4s ease-in-out;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tampilkan menu saat 'active' */
+    .nav-menu.active {
+        right: 0;
+    }
+
+    /* Ubah link di dalam menu HP */
+    .nav-menu li {
+        margin: 20px 0;
+        /* Beri jarak atas-bawah */
+    }
+
+    .nav-menu a {
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        /* Selalu warna utama (hitam/hijau) */
+    }
+
+    /* Tombol Kontak di HP */
+    .nav-menu .btn-primary {
+        color: var(--text-light);
+        background-color: var(--primary-color);
+    }
+
+    .nav-menu .btn-primary:hover {
+        background-color: #333;
+        color: var(--text-light);
+    }
+}
+
+/* ======== CSS UNTUK ACTIVE LINK (SCROLLSPY) ======== */
+
+/* Beri style pada link yang aktif (sesuai section) */
+.nav-menu a:not(.btn).active-link {
+    color: #000; /* Atau warna lain yang menonjol */
+    font-weight: 700;
+}
+
+/* Ganti warnanya saat di header transparan */
+#header:not(.scrolled) .nav-menu a:not(.btn).active-link {
+    color: var(--secondary-color); /* Putih pudar */
+}
+
+/* Di menu HP, buat lebih jelas */
+@media (max-width: 768px) {
+    .nav-menu a:not(.btn).active-link {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+}
